@@ -32,6 +32,7 @@
       flex-direction: column; 
       justify-content: center; 
       align-items: center; 
+      font-family: 'Ma Shan Zheng', cursive; /* Apply handwritten font to buttons */
     }
     #grid button:hover { 
       background-color: #ddd; 
@@ -84,7 +85,7 @@
   <script>
     let data = [];
 
-    fetch("https://gist.githubusercontent.com/your-username/unique-id/raw/chinese_characters.json?v=" + Date.now())
+    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/88a89bd75f51b95dc2151602bd0ab9215038b643/pinyin.json?v=" + Date.now())
       .then(response => {
         if (!response.ok) throw new Error("Fetch failed: " + response.status);
         console.log("Fetch status:", response.status);
