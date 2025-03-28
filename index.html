@@ -33,17 +33,17 @@
       flex-direction: column; 
       justify-content: center; 
       align-items: center; 
-      font-family: 'Ma Shan Zheng', cursive; /* Apply handwritten font to buttons */
+      font-family: 'Ma Shan Zheng', cursive; /* Handwritten font for characters */
     }
     #grid button:hover { 
       background-color: #ddd; 
     }
     #grid button .meaning { 
-      font-size: 14px; 
+      font-size: 10px; /* Updated to 10px */
       color: #666; 
       margin-top: 5px; 
       display: none; 
-      font-family: Arial, sans-serif; /* Keep meanings in Arial for readability */
+      font-family: Arial, sans-serif; /* Arial for meanings */
     }
     #feedback { 
       font-size: 18px; 
@@ -87,18 +87,13 @@
   <script>
     let data = [];
 
-    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/88a89bd75f51b95dc2151602bd0ab9215038b643/pinyin.json?v=" + Date.now())
+    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/88a89bd75f51b95dc2151602bd0ab9215038b643/pinyin.json")
       .then(response => {
         if (!response.ok) throw new Error("Fetch failed: " + response.status);
-        console.log("Fetch status:", response.status);
         return response.json();
       })
       .then(json => {
         data = json;
-        console.log("Fetched data (first 5):", data.slice(0, 5));
-        if (!data[0].hasOwnProperty("meaning")) {
-          console.error("Warning: 'meaning' field missing in data!");
-        }
         generateQuiz();
       })
       .catch(error => console.error("Error loading JSON:", error));
