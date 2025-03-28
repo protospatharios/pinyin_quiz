@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinese Character Quiz</title>
+  <style>
+    #quiz-container { text-align: center; font-family: Arial, sans-serif; }
+    #pinyin-question { margin-bottom: 20px; font-size: 24px; }
+    #grid { display: grid; grid-template-columns: repeat(3, 100px); grid-gap: 10px; justify-content: center; margin-bottom: 20px; }
+    #grid button { width: 100px; height: 100px; font-size: 32px; background-color: #f0f0f0; border: 2px solid #333; cursor: pointer; transition: background-color 0.3s; }
+    #grid button:hover { background-color: #ddd; }
+    #feedback { font-size: 18px; color: #333; }
+    #next-quiz { padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    #next-quiz:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+  <div id="quiz-container">
+    <select id="year-filter">
+      <option value="all">All Years</option>
+      <option value="1">Year 1</option>
+      <option value="2">Year 2</option>
+      <option value="3">Year 3</option>
+      <option value="4">Year 4</option>
+      <option value="5">Year 5</option>
+      <option value="6">Year 6</option>
+      <option value="7">Year 7</option>
+      <option value="8">Year 8</option>
+      <option value="9">Year 9</option>
+      <option value="10">Year 10</option>
+      <option value="11">Year 11</option>
+      <option value="12">Year 12</option>
+    </select>
+    <h2 id="pinyin-question">Pinyin will appear here</h2>
+    <div id="grid"></div>
+    <p id="feedback"></p>
+    <button id="next-quiz">Next Question</button>
+  </div>
+  <script>
+    let data = [];
+    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/4910c8f3859c94109388ef620dfefe6a1cca3bb0/pinyin.json")
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        generateQuiz();
+      })
+      .catch(error => console.error("Error loading JSON:", error));
+
+    function generateQuizFrom(dataset) {
+      document.getElementById("feedback").textContent = "";
+      const randomIndex = Math.floor(Math.random() * dataset.length);
+      const questionPinyin = dataset[randomIndex].pinyin;
+      const correctChar = dataset[randomIndex].char;
+      document.getElementById("pinyin-question").textContent = `Pinyin: ${questionPinyin}`;
+      let options = [correctChar];
+      while (options.length < 9) {
+        const randChar = dataset[Math.floor(Math.random() * dataset.length)].char;
+        if (!options.includes(randChar)) options.push(randChar);
+      }
+      options.sort(() => Math.random() - 0.5);
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+      options.forEach(char => {
+        const button = document.createElement("button");
+        button.textContent = char;
+        button.addEventListener("click", () => checkAnswer(char, correctChar));
+        grid.appendChild(button);
+      });
+    }
+
+    function generateQuiz() {
+      const selectedYear = document.getElementById("year-filter").value;
+      const filteredData = selectedYear === "all" ? data : data.filter(item => item.year == selectedYear);
+      if (filteredData.length < 9) {
+        document.getElementById("feedback").textContent = "Not enough characters in this year for a 3x3 grid!";
+        return;
+      }
+      generateQuizFrom(filteredData);
+    }
+
+    function checkAnswer(selected, correct) {
+      const feedback = document.getElementById("feedback");
+      if (selected === correct) {
+        feedback.textContent = "Correct!";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = `Wrong! The correct answer is ${correct}`;
+        feedback.style.color = "red";
+      }
+      document.querySelectorAll("#grid button").forEach(btn => btn.disabled = true);
+    }
+
+    document.getElementById("next-quiz").addEventListener("click", generateQuiz);
+    document.getElementById("year-filter").addEventListener("change", generateQuiz);
+  </script>
+</body>
+</html>
