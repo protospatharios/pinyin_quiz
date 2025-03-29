@@ -32,14 +32,11 @@
       display: flex; 
       flex-direction: column; 
       justify-content: center; 
-      align-items: stretch; 
+      align-items: center; 
       font-family: 'Noto Sans SC', sans-serif; 
     }
     #grid button:hover { 
       background-color: #ddd; 
-    }
-    #grid button > :first-child { 
-      align-self: center; 
     }
     #grid button .pinyin { 
       font-size: 12px; 
@@ -53,7 +50,7 @@
       text-align: center; 
       white-space: normal; 
       word-break: normal; 
-      align-self: stretch; 
+      align-self: stretch;
     }
     #grid button .meaning { 
       font-size: 10px; 
@@ -66,7 +63,7 @@
       text-align: center; 
       white-space: normal; 
       word-break: normal; 
-      align-self: stretch; 
+      align-self: stretch;
     }
     #feedback { 
       font-size: 18px; 
@@ -172,7 +169,7 @@
           options.push({ 
             char: randChar, 
             pinyin: dataset[randIndex].pinyin, 
-            meaning: dataset[randomIndex].meaning
+            meaning: dataset[randIndex].meaning // Fixed: Use randIndex instead of randomIndex
           });
         }
       }
