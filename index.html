@@ -68,25 +68,61 @@
     #next-quiz:hover { 
       background-color: #45a049; 
     }
+    /* Beautify the select dropdown */
+    #year-filter {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 2px solid #4CAF50;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+    }
+    #year-filter:hover {
+      background-color: #e0e0e0;
+      border-color: #45a049;
+    }
+    #year-filter:focus {
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+    /* Style the "All Years" option */
+    #year-filter option.all-years {
+      font-weight: bold;
+      color: #4CAF50;
+      background-color: #e8f5e9;
+    }
+    #year-filter option {
+      font-size: 14px;
+      color: #333;
+      background-color: #fff;
+    }
   </style>
 </head>
 <body>
   <div id="quiz-container">
-    <select id="year-filter">
-      <option value="all">All Years</option>
-      <option value="1">Year 1</option>
-      <option value="2">Year 2</option>
-      <option value="3">Year 3</option>
-      <option value="4">Year 4</option>
-      <option value="5">Year 5</option>
-      <option value="6">Year 6</option>
-      <option value="7">Year 7</option>
-      <option value="8">Year 8</option>
-      <option value="9">Year 9</option>
-      <option value="10">Year 10</option>
-      <option value="11">Year 11</option>
-      <option value="12">Year 12</option>
-    </select>
+  <select id="year-filter">
+    <option value="all" class="all-years">All Years</option>
+    <option value="1">Year 1</option>
+    <option value="2">Year 2</option>
+    <option value="3">Year 3</option>
+    <option value="4">Year 4</option>
+    <option value="5">Year 5</option>
+    <option value="6">Year 6</option>
+    <option value="7">Year 7</option>
+    <option value="8">Year 8</option>
+    <option value="9">Year 9</option>
+    <option value="10">Year 10</option>
+    <option value="11">Year 11</option>
+    <option value="12">Year 12</option>
+  </select>
     <h2 id="pinyin-question">Pinyin will appear here</h2>
     <div id="grid"></div>
     <p id="feedback"></p>
@@ -121,7 +157,7 @@
           options.push({ 
             char: randChar, 
             pinyin: dataset[randIndex].pinyin, 
-            meaning: dataset[randIndex].meaning // Fixed: Use randIndex for meaning
+            meaning: dataset[randIndex].meaning
           });
         }
       }
