@@ -43,28 +43,28 @@
       font-weight: bold; 
       color: #666; 
       margin: 1px 2px; 
+      padding: 0 2px; 
       display: none; 
       font-family: Arial, sans-serif; 
       width: 100%; 
-      min-width: 106px; 
       box-sizing: border-box; 
       text-align: center; 
       white-space: normal; 
-      word-break: normal; 
+      overflow-wrap: break-word; 
       align-self: stretch;
     }
     #grid button .meaning { 
       font-size: 10px; 
       color: #666; 
       margin: 1px 2px; 
+      padding: 0 2px; 
       display: none; 
       font-family: Arial, sans-serif; 
       width: 100%; 
-      min-width: 106px; 
       box-sizing: border-box; 
       text-align: center; 
       white-space: normal; 
-      word-break: normal; 
+      overflow-wrap: break-word; 
       align-self: stretch;
     }
     #feedback { 
@@ -175,9 +175,6 @@
           });
         }
       }
-
-      // Debug: Log the options to verify meanings
-      console.log("Options:", options);
 
       options.sort(() => Math.random() - 0.5);
 
