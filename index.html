@@ -23,7 +23,7 @@
     }
     #grid button { 
       width: 100px; 
-      height: 100px; 
+      height: 130px; 
       font-size: 32px; 
       background-color: #f0f0f0; 
       border: 2px solid #333; 
@@ -33,15 +33,23 @@
       flex-direction: column; 
       justify-content: center; 
       align-items: center; 
-      font-family: 'Noto Sans SC', sans-serif; /* Updated to Noto Sans SC */
+      font-family: 'Noto Sans SC', sans-serif; 
     }
     #grid button:hover { 
       background-color: #ddd; 
     }
+    #grid button .pinyin { 
+      font-size: 12px; /* Updated to 12px */
+      font-weight: bold; /* Made bold */
+      color: #666; 
+      margin: 2px 5px; 
+      display: none; 
+      font-family: Arial, sans-serif; 
+    }
     #grid button .meaning { 
       font-size: 10px; 
       color: #666; 
-      margin-top: 5px; 
+      margin: 2px 5px; 
       display: none; 
       font-family: Arial, sans-serif; 
     }
@@ -105,12 +113,12 @@
       const correctChar = dataset[randomIndex].char;
       document.getElementById("pinyin-question").textContent = `Pinyin: ${questionPinyin}`;
 
-      let options = [{ char: correctChar, meaning: dataset[randomIndex].meaning }];
+      let options = [{ char: correctChar, pinyin: dataset[randomIndex].pinyin, meaning: dataset[randomIndex].meaning }];
       while (options.length < 9) {
         const randIndex = Math.floor(Math.random() * dataset.length);
         const randChar = dataset[randIndex].char;
         if (!options.some(opt => opt.char === randChar)) {
-          options.push({ char: randChar, meaning: dataset[randIndex].meaning });
+          options.push({ char: randChar, pinyin: dataset[randIndex].pinyin, meaning: dataset[randomIndex].meaning });
         }
       }
 
@@ -120,7 +128,7 @@
       grid.innerHTML = "";
       options.forEach(option => {
         const button = document.createElement("button");
-        button.innerHTML = `${option.char}<span class="meaning">${option.meaning || "N/A"}</span>`;
+        button.innerHTML = `${option.char}<span class="pinyin">${option.pinyin || "N/A"}</span><span class="meaning">${option.meaning || "N/A"}</span>`;
         button.addEventListener("click", () => checkAnswer(option.char, correctChar));
         grid.appendChild(button);
       });
@@ -145,6 +153,9 @@
         feedback.textContent = `Wrong! The correct answer is ${correct}`;
         feedback.style.color = "red";
       }
+      document.querySelectorAll("#grid button .pinyin").forEach(span => {
+        span.style.display = "block";
+      });
       document.querySelectorAll("#grid button .meaning").forEach(span => {
         span.style.display = "block";
       });
