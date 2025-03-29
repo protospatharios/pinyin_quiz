@@ -4,11 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chinese Character Quiz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Sans+SC&display=swap" rel="stylesheet">
   <style>
     #quiz-container { 
       text-align: center; 
       font-family: Arial, sans-serif; 
+    }
+    #header-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    #score-counter {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin: 0;
     }
     #pinyin-question { 
       margin-bottom: 20px; 
@@ -28,7 +40,7 @@
       background-color: #f0f0f0; 
       border: 2px solid #333; 
       cursor: pointer; 
-      transition: background-color 0.3s; 
+      transition: background-color 0.3s, border-color 0.3s; 
       display: flex; 
       flex-direction: column; 
       justify-content: center; 
@@ -37,6 +49,14 @@
     }
     #grid button:hover { 
       background-color: #ddd; 
+    }
+    #grid button.correct { 
+      background-color: #cce3cc; 
+      border-color: #006400; 
+    }
+    #grid button.wrong { 
+      background-color: #edc9c2; 
+      border-color: #8B0000; 
     }
     #grid button .pinyin { 
       font-size: 12px; 
@@ -78,7 +98,7 @@
     #next-quiz:hover { 
       background-color: #45a049; 
     }
-    /* Beautify the select dropdown */
+    /* Beautify the year selection dropdown */
     #year-filter {
       padding: 8px 12px;
       font-size: 16px;
@@ -114,25 +134,63 @@
       color: #333;
       background-color: #fff;
     }
+    /* Beautify the font selection dropdown */
+    #font-filter {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 2px solid #1E90FF;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%231E90FF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+    }
+    #font-filter:hover {
+      background-color: #e0e0e0;
+      border-color: #1C86EE;
+    }
+    #font-filter:focus {
+      box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+    }
+    #font-filter option {
+      font-size: 14px;
+      color: #333;
+      background-color: #fff;
+    }
   </style>
 </head>
 <body>
   <div id="quiz-container">
-    <select id="year-filter">
-      <option value="all" class="all-years">All Years</option>
-      <option value="1">Year 1</option>
-      <option value="2">Year 2</option>
-      <option value="3">Year 3</option>
-      <option value="4">Year 4</option>
-      <option value="5">Year 5</option>
-      <option value="6">Year 6</option>
-      <option value="7">Year 7</option>
-      <option value="8">Year 8</option>
-      <option value="9">Year 9</option>
-      <option value="10">Year 10</option>
-      <option value="11">Year 11</option>
-      <option value="12">Year 12</option>
-    </select>
+    <div id="header-controls">
+      <select id="year-filter">
+        <option value="all" class="all-years">All Years</option>
+        <option value="1">Year 1</option>
+        <option value="2">Year 2</option>
+        <option value="3">Year 3</option>
+        <option value="4">Year 4</option>
+        <option value="5">Year 5</option>
+        <option value="6">Year 6</option>
+        <option value="7">Year 7</option>
+        <option value="8">Year 8</option>
+        <option value="9">Year 9</option>
+        <option value="10">Year 10</option>
+        <option value="11">Year 11</option>
+        <option value="12">Year 12</option>
+      </select>
+      <select id="font-filter">
+        <option value="Noto Sans SC">Noto Sans SC</option>
+        <option value="Ma Shan Zheng">Ma Shan Zheng</option>
+        <option value="Long Cang">Long Cang</option>
+      </select>
+      <p id="score-counter">0/0</p>
+    </div>
     <h2 id="pinyin-question">Pinyin will appear here</h2>
     <div id="grid"></div>
     <p id="feedback"></p>
@@ -140,6 +198,8 @@
   </div>
   <script>
     let data = [];
+    let correctAnswers = 0;
+    let totalAttempts = 0;
 
     fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/8e56e91deb05f22788d05c985d6df17625d29342/pinyin.json")
       .then(response => {
@@ -152,12 +212,29 @@
       })
       .catch(error => console.error("Error loading JSON:", error));
 
+    function updateScoreDisplay() {
+      document.getElementById("score-counter").textContent = `${correctAnswers}/${totalAttempts}`;
+    }
+
+    function resetScore() {
+      correctAnswers = 0;
+      totalAttempts = 0;
+      updateScoreDisplay();
+    }
+
+    function updateFont() {
+      const selectedFont = document.getElementById("font-filter").value;
+      document.querySelectorAll("#grid button").forEach(button => {
+        button.style.fontFamily = `'${selectedFont}', sans-serif`;
+      });
+    }
+
     function generateQuizFrom(dataset) {
       document.getElementById("feedback").textContent = "";
       const randomIndex = Math.floor(Math.random() * dataset.length);
       const questionPinyin = dataset[randomIndex].pinyin;
       const correctChar = dataset[randomIndex].char;
-      document.getElementById("pinyin-question").textContent = `Pinyin: ${questionPinyin}`;
+      document.getElementById("pinyin-question").textContent = questionPinyin;
 
       let options = [{ char: correctChar, pinyin: dataset[randomIndex].pinyin, meaning: dataset[randomIndex].meaning }];
       while (options.length < 9) {
@@ -176,9 +253,12 @@
 
       const grid = document.getElementById("grid");
       grid.innerHTML = "";
+      const selectedFont = document.getElementById("font-filter").value;
       options.forEach(option => {
         const button = document.createElement("button");
         button.innerHTML = `${option.char}<div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div>`;
+        button.dataset.char = option.char;
+        button.style.fontFamily = `'${selectedFont}', sans-serif`;
         button.addEventListener("click", () => checkAnswer(option.char, correctChar));
         grid.appendChild(button);
       });
@@ -196,13 +276,33 @@
 
     function checkAnswer(selected, correct) {
       const feedback = document.getElementById("feedback");
+      const buttons = document.querySelectorAll("#grid button");
+
+      totalAttempts++;
       if (selected === correct) {
-        feedback.textContent = "Correct!";
-        feedback.style.color = "green";
-      } else {
+        correctAnswers++;
+      }
+      updateScoreDisplay();
+
+      buttons.forEach(button => {
+        if (button.dataset.char === correct) {
+          button.classList.add("correct");
+        }
+      });
+
+      if (selected !== correct) {
+        buttons.forEach(button => {
+          if (button.dataset.char === selected) {
+            button.classList.add("wrong");
+          }
+        });
         feedback.textContent = `Wrong! The correct answer is ${correct}`;
         feedback.style.color = "red";
+      } else {
+        feedback.textContent = "Correct!";
+        feedback.style.color = "green";
       }
+
       document.querySelectorAll("#grid button .pinyin").forEach(div => {
         div.style.display = "block";
       });
@@ -213,7 +313,14 @@
     }
 
     document.getElementById("next-quiz").addEventListener("click", generateQuiz);
-    document.getElementById("year-filter").addEventListener("change", generateQuiz);
+    document.getElementById("year-filter").addEventListener("change", () => {
+      resetScore();
+      generateQuiz();
+    });
+    document.getElementById("font-filter").addEventListener("change", () => {
+      updateFont();
+      generateQuiz();
+    });
   </script>
 </body>
 </html>
