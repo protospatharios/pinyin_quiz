@@ -46,6 +46,7 @@
       display: none; 
       font-family: Arial, sans-serif; 
       width: 100%; 
+      min-width: 106px; 
       box-sizing: border-box; 
       text-align: center; 
       white-space: normal; 
@@ -59,6 +60,7 @@
       display: none; 
       font-family: Arial, sans-serif; 
       width: 100%; 
+      min-width: 106px; 
       box-sizing: border-box; 
       text-align: center; 
       white-space: normal; 
@@ -169,10 +171,13 @@
           options.push({ 
             char: randChar, 
             pinyin: dataset[randIndex].pinyin, 
-            meaning: dataset[randIndex].meaning // Fixed: Use randIndex instead of randomIndex
+            meaning: dataset[randIndex].meaning
           });
         }
       }
+
+      // Debug: Log the options to verify meanings
+      console.log("Options:", options);
 
       options.sort(() => Math.random() - 0.5);
 
