@@ -225,7 +225,7 @@
     let correctAnswers = 0;
     let totalAttempts = 0;
 
-    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/8e56e91deb05f22788d05c985d6df17625d29342/pinyin.json")
+    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/43fadc1b7796c8b0924fca58e0f6c0e57da598d1/pinyin.json")
       .then(response => {
         if (!response.ok) throw new Error("Fetch failed: " + response.status);
         return response.json();
