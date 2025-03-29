@@ -39,8 +39,8 @@
       background-color: #ddd; 
     }
     #grid button .pinyin { 
-      font-size: 12px; /* Updated to 12px */
-      font-weight: bold; /* Made bold */
+      font-size: 12px; 
+      font-weight: bold; 
       color: #666; 
       margin: 2px 5px; 
       display: none; 
@@ -118,7 +118,11 @@
         const randIndex = Math.floor(Math.random() * dataset.length);
         const randChar = dataset[randIndex].char;
         if (!options.some(opt => opt.char === randChar)) {
-          options.push({ char: randChar, pinyin: dataset[randIndex].pinyin, meaning: dataset[randomIndex].meaning });
+          options.push({ 
+            char: randChar, 
+            pinyin: dataset[randIndex].pinyin, 
+            meaning: dataset[randIndex].meaning // Fixed: Use randIndex for meaning
+          });
         }
       }
 
