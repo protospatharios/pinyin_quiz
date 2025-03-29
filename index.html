@@ -34,7 +34,6 @@
       justify-content: center; 
       align-items: stretch; 
       font-family: 'Noto Sans SC', sans-serif; 
-      min-width: 0; /* Prevent flexbox from using intrinsic width */
     }
     #grid button:hover { 
       background-color: #ddd; 
@@ -47,12 +46,11 @@
       display: none; 
       font-family: Arial, sans-serif; 
       width: 100%; 
-      max-width: 100%; 
       box-sizing: border-box; 
       text-align: center; 
       white-space: normal; 
       word-break: normal; 
-      display: block; 
+      flex: 1;
     }
     #grid button .meaning { 
       font-size: 10px; 
@@ -61,12 +59,11 @@
       display: none; 
       font-family: Arial, sans-serif; 
       width: 100%; 
-      max-width: 100%; 
       box-sizing: border-box; 
       text-align: center; 
       white-space: normal; 
       word-break: normal; 
-      display: block; 
+      flex: 1;
     }
     #feedback { 
       font-size: 18px; 
@@ -183,7 +180,7 @@
       grid.innerHTML = "";
       options.forEach(option => {
         const button = document.createElement("button");
-        button.innerHTML = `${option.char}<span class="pinyin">${option.pinyin || "N/A"}</span><span class="meaning">${option.meaning || "N/A"}</span>`;
+        button.innerHTML = `${option.char}<div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div>`;
         button.addEventListener("click", () => checkAnswer(option.char, correctChar));
         grid.appendChild(button);
       });
@@ -208,11 +205,11 @@
         feedback.textContent = `Wrong! The correct answer is ${correct}`;
         feedback.style.color = "red";
       }
-      document.querySelectorAll("#grid button .pinyin").forEach(span => {
-        span.style.display = "block";
+      document.querySelectorAll("#grid button .pinyin").forEach(div => {
+        div.style.display = "block";
       });
-      document.querySelectorAll("#grid button .meaning").forEach(span => {
-        span.style.display = "block";
+      document.querySelectorAll("#grid button .meaning").forEach(div => {
+        div.style.display = "block";
       });
       document.querySelectorAll("#grid button").forEach(btn => btn.disabled = true);
     }
