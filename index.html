@@ -11,16 +11,87 @@
       font-family: Arial, sans-serif; 
     }
     #header-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      position: relative;
       margin-bottom: 20px;
+      height: 40px;
+    }
+    #year-filter {
+      position: absolute;
+      left: 0;
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 2px solid #4CAF50;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 28px;
+    }
+    #year-filter:hover {
+      background-color: #e0e0e0;
+      border-color: #45a049;
+    }
+    #year-filter:focus {
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+    #year-filter option.all-years {
+      font-weight: bold;
+      color: #4CAF50;
+      background-color: #e8f5e9;
+    }
+    #year-filter option {
+      font-size: 14px;
+      color: #333;
+      background-color: #fff;
+    }
+    #font-filter {
+      position: absolute;
+      right: 0;
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 2px solid #1E90FF;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%231E90FF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 28px;
+    }
+    #font-filter:hover {
+      background-color: #e0e0e0;
+      border-color: #1C86EE;
+    }
+    #font-filter:focus {
+      box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+    }
+    #font-filter option {
+      font-size: 14px;
+      color: #333;
+      background-color: #fff;
     }
     #score-counter {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%);
       font-size: 18px;
       font-weight: bold;
       color: #333;
       margin: 0;
+      line-height: 1;
+      top: 50%;
     }
     #pinyin-question { 
       margin-bottom: 20px; 
@@ -46,6 +117,10 @@
       justify-content: center; 
       align-items: center; 
       font-family: 'Noto Sans SC', sans-serif; 
+    }
+    #grid button.font-ma-shan-zheng,
+    #grid button.font-long-cang {
+      font-size: 36px;
     }
     #grid button:hover { 
       background-color: #ddd; 
@@ -97,72 +172,6 @@
     }
     #next-quiz:hover { 
       background-color: #45a049; 
-    }
-    /* Beautify the year selection dropdown */
-    #year-filter {
-      padding: 8px 12px;
-      font-size: 16px;
-      border: 2px solid #4CAF50;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 30px;
-    }
-    #year-filter:hover {
-      background-color: #e0e0e0;
-      border-color: #45a049;
-    }
-    #year-filter:focus {
-      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-    }
-    /* Style the "All Years" option */
-    #year-filter option.all-years {
-      font-weight: bold;
-      color: #4CAF50;
-      background-color: #e8f5e9;
-    }
-    #year-filter option {
-      font-size: 14px;
-      color: #333;
-      background-color: #fff;
-    }
-    /* Beautify the font selection dropdown */
-    #font-filter {
-      padding: 8px 12px;
-      font-size: 16px;
-      border: 2px solid #1E90FF;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="%231E90FF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 30px;
-    }
-    #font-filter:hover {
-      background-color: #e0e0e0;
-      border-color: #1C86EE;
-    }
-    #font-filter:focus {
-      box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
-    }
-    #font-filter option {
-      font-size: 14px;
-      color: #333;
-      background-color: #fff;
     }
   </style>
 </head>
@@ -226,6 +235,14 @@
       const selectedFont = document.getElementById("font-filter").value;
       document.querySelectorAll("#grid button").forEach(button => {
         button.style.fontFamily = `'${selectedFont}', sans-serif`;
+        button.classList.remove("font-noto-sans-sc", "font-ma-shan-zheng", "font-long-cang");
+        if (selectedFont === "Noto Sans SC") {
+          button.classList.add("font-noto-sans-sc");
+        } else if (selectedFont === "Ma Shan Zheng") {
+          button.classList.add("font-ma-shan-zheng");
+        } else if (selectedFont === "Long Cang") {
+          button.classList.add("font-long-cang");
+        }
       });
     }
 
@@ -259,6 +276,13 @@
         button.innerHTML = `${option.char}<div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div>`;
         button.dataset.char = option.char;
         button.style.fontFamily = `'${selectedFont}', sans-serif`;
+        if (selectedFont === "Noto Sans SC") {
+          button.classList.add("font-noto-sans-sc");
+        } else if (selectedFont === "Ma Shan Zheng") {
+          button.classList.add("font-ma-shan-zheng");
+        } else if (selectedFont === "Long Cang") {
+          button.classList.add("font-long-cang");
+        }
         button.addEventListener("click", () => checkAnswer(option.char, correctChar));
         grid.appendChild(button);
       });
