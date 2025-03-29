@@ -9,10 +9,16 @@
     #quiz-container { 
       text-align: center; 
       font-family: Arial, sans-serif; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #grid-container {
+      width: 350px;
     }
     #header-controls {
+      width: 350px;
       position: relative;
-      margin-bottom: 20px;
       height: 40px;
     }
     #year-filter {
@@ -33,6 +39,7 @@
       background-repeat: no-repeat;
       background-position: right 8px center;
       padding-right: 28px;
+      width: 100px;
     }
     #year-filter:hover {
       background-color: #e0e0e0;
@@ -69,6 +76,7 @@
       background-repeat: no-repeat;
       background-position: right 8px center;
       padding-right: 28px;
+      width: 100px;
     }
     #font-filter:hover {
       background-color: #e0e0e0;
@@ -76,6 +84,11 @@
     }
     #font-filter:focus {
       box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+    }
+    #font-filter option.font-placeholder {
+      font-weight: bold;
+      color: #1E90FF;
+      background-color: #e6f0fa;
     }
     #font-filter option {
       font-size: 14px;
@@ -101,7 +114,6 @@
       display: grid; 
       grid-template-columns: repeat(3, 110px); 
       grid-gap: 10px; 
-      justify-content: center; 
       margin-bottom: 20px; 
     }
     #grid button { 
@@ -194,16 +206,19 @@
         <option value="12">Year 12</option>
       </select>
       <select id="font-filter">
+        <option value="" disabled selected class="font-placeholder">Font</option>
         <option value="Noto Sans SC">Noto Sans SC</option>
         <option value="Ma Shan Zheng">Ma Shan Zheng</option>
         <option value="Long Cang">Long Cang</option>
       </select>
       <p id="score-counter">0/0</p>
     </div>
-    <h2 id="pinyin-question">Pinyin will appear here</h2>
-    <div id="grid"></div>
-    <p id="feedback"></p>
-    <button id="next-quiz">Next Question</button>
+    <div id="grid-container">
+      <h2 id="pinyin-question">Pinyin will appear here</h2>
+      <div id="grid"></div>
+      <p id="feedback"></p>
+      <button id="next-quiz">Next Question</button>
+    </div>
   </div>
   <script>
     let data = [];
@@ -233,14 +248,15 @@
 
     function updateFont() {
       const selectedFont = document.getElementById("font-filter").value;
+      const fontToApply = selectedFont || "Noto Sans SC";
       document.querySelectorAll("#grid button").forEach(button => {
-        button.style.fontFamily = `'${selectedFont}', sans-serif`;
+        button.style.fontFamily = `'${fontToApply}', sans-serif`;
         button.classList.remove("font-noto-sans-sc", "font-ma-shan-zheng", "font-long-cang");
-        if (selectedFont === "Noto Sans SC") {
+        if (fontToApply === "Noto Sans SC") {
           button.classList.add("font-noto-sans-sc");
-        } else if (selectedFont === "Ma Shan Zheng") {
+        } else if (fontToApply === "Ma Shan Zheng") {
           button.classList.add("font-ma-shan-zheng");
-        } else if (selectedFont === "Long Cang") {
+        } else if (fontToApply === "Long Cang") {
           button.classList.add("font-long-cang");
         }
       });
@@ -260,8 +276,8 @@
         if (!options.some(opt => opt.char === randChar)) {
           options.push({ 
             char: randChar, 
-            pinyin: dataset[randIndex].pinyin, 
-            meaning: dataset[randIndex].meaning
+            pinyin: dataset[randomIndex].pinyin, 
+            meaning: dataset[randomIndex].meaning
           });
         }
       }
@@ -271,16 +287,17 @@
       const grid = document.getElementById("grid");
       grid.innerHTML = "";
       const selectedFont = document.getElementById("font-filter").value;
+      const fontToApply = selectedFont || "Noto Sans SC";
       options.forEach(option => {
         const button = document.createElement("button");
         button.innerHTML = `${option.char}<div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div>`;
         button.dataset.char = option.char;
-        button.style.fontFamily = `'${selectedFont}', sans-serif`;
-        if (selectedFont === "Noto Sans SC") {
+        button.style.fontFamily = `'${fontToApply}', sans-serif`;
+        if (fontToApply === "Noto Sans SC") {
           button.classList.add("font-noto-sans-sc");
-        } else if (selectedFont === "Ma Shan Zheng") {
+        } else if (fontToApply === "Ma Shan Zheng") {
           button.classList.add("font-ma-shan-zheng");
-        } else if (selectedFont === "Long Cang") {
+        } else if (fontToApply === "Long Cang") {
           button.classList.add("font-long-cang");
         }
         button.addEventListener("click", () => checkAnswer(option.char, correctChar));
