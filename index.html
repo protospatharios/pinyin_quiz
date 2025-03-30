@@ -146,7 +146,7 @@
       border-color: #8B0000; 
     }
     #grid button .pinyin { 
-      font-size: 12px; 
+      font-size: 14px;
       font-weight: bold; 
       color: #666; 
       margin: 1px 2px; 
@@ -192,18 +192,18 @@
     <div id="header-controls">
       <select id="year-filter">
         <option value="all" class="all-years">All Years</option>
-        <option value="1">Year 1</option>
-        <option value="2">Year 2</option>
-        <option value="3">Year 3</option>
-        <option value="4">Year 4</option>
-        <option value="5">Year 5</option>
-        <option value="6">Year 6</option>
-        <option value="7">Year 7</option>
-        <option value="8">Year 8</option>
-        <option value="9">Year 9</option>
-        <option value="10">Year 10</option>
-        <option value="11">Year 11</option>
-        <option value="12">Year 12</option>
+        <option value="1">Year 1 (100)</option>
+        <option value="2">Year 2 (250)</option>
+        <option value="3">Year 3 (350)</option>
+        <option value="4">Year 4 (300)</option>
+        <option value="5">Year 5 (300)</option>
+        <option value="6">Year 6 (300)</option>
+        <option value="7">Year 7 (200)</option>
+        <option value="8">Year 8 (200)</option>
+        <option value="9">Year 9 (150)</option>
+        <option value="10">Year 10 (150)</option>
+        <option value="11">Year 11 (80)</option>
+        <option value="12">Year 12 (80)</option>
       </select>
       <select id="font-filter">
         <option value="" disabled selected class="font-placeholder">Font</option>
@@ -225,7 +225,7 @@
     let correctAnswers = 0;
     let totalAttempts = 0;
 
-    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/43fadc1b7796c8b0924fca58e0f6c0e57da598d1/pinyin.json")
+    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/fb26b9ea2adf2fe0b0c3cfd83018042fcb3d5dd6/pinyin.json")
       .then(response => {
         if (!response.ok) throw new Error("Fetch failed: " + response.status);
         return response.json();
