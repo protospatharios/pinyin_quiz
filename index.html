@@ -39,7 +39,7 @@
       background-repeat: no-repeat;
       background-position: right 8px center;
       padding-right: 28px;
-      width: 100px;
+      width: 120px;
     }
     #year-filter:hover {
       background-color: #e0e0e0;
@@ -192,18 +192,33 @@
     <div id="header-controls">
       <select id="year-filter">
         <option value="all" class="all-years">All Years</option>
-        <option value="1">Year 1 (100)</option>
-        <option value="2">Year 2 (250)</option>
-        <option value="3">Year 3 (350)</option>
-        <option value="4">Year 4 (300)</option>
-        <option value="5">Year 5 (300)</option>
-        <option value="6">Year 6 (300)</option>
-        <option value="7">Year 7 (200)</option>
-        <option value="8">Year 8 (200)</option>
-        <option value="9">Year 9 (150)</option>
-        <option value="10">Year 10 (150)</option>
-        <option value="11">Year 11 (80)</option>
-        <option value="12">Year 12 (80)</option>
+        <option value="1">一上 (100)</option>
+        <option value="2">一下 1 (90)</option>
+        <option value="3">一下 2 (80)</option>
+        <option value="4">一下 3 (80)</option>
+        <option value="5">二上 1 (90)</option>
+        <option value="6">二上 2 (90)</option>
+        <option value="7">二上 3 (90)</option>
+        <option value="8">二上 4 (79)</option>
+        <option value="9">二下 1 (100)</option>
+        <option value="10">二下 2 (100)</option>
+        <option value="11">二下 3 (101)</option>
+        <option value="12">三上 1 (100)</option>
+        <option value="13">三上 2 (100)</option>
+        <option value="14">三上 3 (99)</option>
+        <option value="15">三下 1 (100)</option>
+        <option value="16">三下 2 (100)</option>
+        <option value="17">三下 3 (100)</option>
+        <option value="18">四上 1 (100)</option>
+        <option value="19">四上 2 (100)</option>
+        <option value="20">四下 1 (100)</option>
+        <option value="21">四下 2 (100)</option>
+        <option value="22">五上 1 (75)</option>
+        <option value="23">五上 2 (74)</option>
+        <option value="24">五下 1 (75)</option>
+        <option value="25">五下 2 (74)</option>
+        <option value="26">六上 (112)</option>
+        <option value="27">六下 (80)</option>
       </select>
       <select id="font-filter">
         <option value="" disabled selected class="font-placeholder">Font</option>
@@ -225,7 +240,7 @@
     let correctAnswers = 0;
     let totalAttempts = 0;
 
-    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/95b3b23efa3ebab50723e640a77766187dfd9900/pinyin.json")
+    fetch("https://gist.githubusercontent.com/protospatharios/628a0867381c864be6267761476bccfe/raw/ba1796d16e700fd0a8fa01cdde5825ba742b3ffe/pinyin.json")
       .then(response => {
         if (!response.ok) throw new Error("Fetch failed: " + response.status);
         return response.json();
