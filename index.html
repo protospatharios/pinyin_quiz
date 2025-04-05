@@ -129,6 +129,7 @@
       justify-content: center; 
       align-items: center; 
       font-family: 'Noto Sans SC', sans-serif; 
+      box-sizing: border-box; /* Ensure padding and borders are included in width */
     }
     #grid button.font-ma-shan-zheng,
     #grid button.font-long-cang {
@@ -146,18 +147,23 @@
       border-color: #8B0000; 
     }
     #grid button .text-container {
-      max-width: 90%;
+      width: 100%; /* Ensure full button width */
       text-align: center;
-      display: none;
+      display: none; /* Hidden until answer is selected */
       display: flex;
+      -webkit-flex-direction: column; /* iOS Safari compatibility */
       flex-direction: column;
+      -webkit-justify-content: center; /* iOS Safari compatibility */
+      justify-content: center;
+      -webkit-align-items: center; /* iOS Safari compatibility */
       align-items: center;
+      box-sizing: border-box; /* Include padding in width */
     }
     #grid button .pinyin { 
       font-size: 14px;
       font-weight: bold; 
       color: #666; 
-      margin: 1px 0 4px 0; /* Add bottom margin to separate from meaning */
+      margin: 0 0 4px 0; /* Bottom margin to separate from meaning */
       font-family: Arial, sans-serif; 
       display: block;
       white-space: normal; 
@@ -166,7 +172,7 @@
     #grid button .meaning { 
       font-size: 10px; 
       color: #666; 
-      margin: 1px 0; 
+      margin: 0; 
       font-family: Arial, sans-serif; 
       display: block;
       white-space: normal; 
@@ -187,6 +193,7 @@
     #next-quiz:hover { 
       background-color: #45a049; 
     }
+    * { box-sizing: border-box; } /* Apply to all elements for consistency */
   </style>
 </head>
 <body>
@@ -307,7 +314,7 @@
       const fontToApply = selectedFont || "Noto Sans SC";
       options.forEach(option => {
         const button = document.createElement("button");
-        button.innerHTML = `${option.char}<div class="text-container"><div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div></div>`;
+        button.innerHTML = `${option.char}<div class="text-container" style="display: none;"><div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div></div>`;
         button.dataset.char = option.char;
         button.style.fontFamily = `'${fontToApply}', sans-serif`;
         if (fontToApply === "Noto Sans SC") {
@@ -362,7 +369,7 @@
       }
 
       document.querySelectorAll("#grid button .text-container").forEach(div => {
-        div.style.display = "block";
+        div.style.display = "flex"; /* Use flex to maintain layout */
       });
       document.querySelectorAll("#grid button").forEach(btn => btn.disabled = true);
     }
