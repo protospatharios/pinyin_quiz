@@ -145,28 +145,27 @@
       background-color: #edc9c2; 
       border-color: #8B0000; 
     }
+    #grid button .text-container {
+      max-width: 90%;
+      text-align: center;
+      display: none;
+    }
     #grid button .pinyin { 
       font-size: 14px;
       font-weight: bold; 
       color: #666; 
-      margin: 1px 2px; 
-      display: none; 
+      margin: 1px 0; 
       font-family: Arial, sans-serif; 
-      width: 100%; 
-      box-sizing: border-box; 
-      text-align: center; 
+      display: inline-block; 
       white-space: normal; 
       word-break: normal; 
     }
     #grid button .meaning { 
       font-size: 10px; 
       color: #666; 
-      margin: 1px 2px; 
-      display: none; 
+      margin: 1px 0; 
       font-family: Arial, sans-serif; 
-      width: 100%; 
-      box-sizing: border-box; 
-      text-align: center; 
+      display: inline-block; 
       white-space: normal; 
       word-break: normal; 
     }
@@ -305,7 +304,7 @@
       const fontToApply = selectedFont || "Noto Sans SC";
       options.forEach(option => {
         const button = document.createElement("button");
-        button.innerHTML = `${option.char}<div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div>`;
+        button.innerHTML = `${option.char}<div class="text-container"><div class="pinyin">${option.pinyin || "N/A"}</div><div class="meaning">${option.meaning || "N/A"}</div></div>`;
         button.dataset.char = option.char;
         button.style.fontFamily = `'${fontToApply}', sans-serif`;
         if (fontToApply === "Noto Sans SC") {
@@ -359,10 +358,7 @@
         feedback.style.color = "green";
       }
 
-      document.querySelectorAll("#grid button .pinyin").forEach(div => {
-        div.style.display = "block";
-      });
-      document.querySelectorAll("#grid button .meaning").forEach(div => {
+      document.querySelectorAll("#grid button .text-container").forEach(div => {
         div.style.display = "block";
       });
       document.querySelectorAll("#grid button").forEach(btn => btn.disabled = true);
