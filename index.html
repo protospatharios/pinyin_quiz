@@ -149,14 +149,17 @@
       max-width: 90%;
       text-align: center;
       display: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     #grid button .pinyin { 
       font-size: 14px;
       font-weight: bold; 
       color: #666; 
-      margin: 1px 0; 
+      margin: 1px 0 4px 0; /* Add bottom margin to separate from meaning */
       font-family: Arial, sans-serif; 
-      display: inline-block; 
+      display: block;
       white-space: normal; 
       word-break: normal; 
     }
@@ -165,7 +168,7 @@
       color: #666; 
       margin: 1px 0; 
       font-family: Arial, sans-serif; 
-      display: inline-block; 
+      display: block;
       white-space: normal; 
       word-break: normal; 
     }
