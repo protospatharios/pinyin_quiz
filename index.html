@@ -230,7 +230,6 @@
         <option value="27">六下 (80)</option>
       </select>
       <select id="font-filter">
-        <option value="" disabled selected class="font-placeholder">Font</option>
         <option value="Noto Sans SC">Noto Sans SC</option>
         <option value="Ma Shan Zheng">Ma Shan Zheng</option>
         <option value="Long Cang">Long Cang</option>
@@ -241,7 +240,7 @@
       <h2 id="pinyin-question">Pinyin will appear here</h2>
       <div id="grid"></div>
       <p id="feedback"></p>
-      <button id="next-quiz">Next Question</button>
+      <button id="next-quiz" type="button" onclick="loadNewCharacter()">Next Question</button>
     </div>
   </div>
   <script>
@@ -369,20 +368,39 @@
       }
 
       document.querySelectorAll("#grid button .text-container").forEach(div => {
-        div.style.display = "flex"; /* Use flex to maintain layout */
+        div.style.display = "flex";
       });
       document.querySelectorAll("#grid button").forEach(btn => btn.disabled = true);
     }
 
-    document.getElementById("next-quiz").addEventListener("click", generateQuiz);
-    document.getElementById("year-filter").addEventListener("change", () => {
-      resetScore();
-      generateQuiz();
+document.getElementById("year-filter").addEventListener("change", updateYear);
+document.getElementById("font-filter").addEventListener("change", updateFont);
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("next-quiz").addEventListener("click", generateQuiz);
+});
+
+function updateFont() {
+    const selectedFont = document.getElementById("font-filter").value;
+    const fontToApply = selectedFont || "Noto Sans SC";
+    document.querySelectorAll("#grid button").forEach(button => {
+      button.style.fontFamily = `'${fontToApply}', sans-serif`;
+      button.classList.remove("font-noto-sans-sc", "font-ma-shan-zheng", "font-long-cang");
+      if (fontToApply === "Noto Sans SC") {
+        button.classList.add("font-noto-sans-sc");
+      } else if (fontToApply === "Ma Shan Zheng") {
+        button.classList.add("font-ma-shan-zheng");
+      } else if (fontToApply === "Long Cang") {
+        button.classList.add("font-long-cang");
+      }
     });
-    document.getElementById("font-filter").addEventListener("change", () => {
-      updateFont();
-      generateQuiz();
-    });
+  }
+
+  function updateYear() {
+    const selectedYear = document.getElementById("year-filter").value;
+    // Set global filter if needed, but do not call loadNewCharacter()
+    console.log("Year changed to:", selectedYear);
+  }
+  
   </script>
 </body>
 </html>
